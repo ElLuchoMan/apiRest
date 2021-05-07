@@ -13,5 +13,5 @@ public class Account implements Serializable{
 	private Long id;
 	private Long saldo;
 	private String tipoCuenta;
-	private String usuario;
+	private String user;
 }
