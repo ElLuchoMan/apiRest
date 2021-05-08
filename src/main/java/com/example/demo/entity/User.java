@@ -19,7 +19,7 @@ public class User implements Serializable {
 	@Column(length = 50)
 	private String name;
 	private String lastname;
-	@Column(name = "correo", nullable = false, unique = true, length = 50)
+	@Column(name = "correo", nullable = false, unique = true, length = 80)
 	private String email;
 	private Boolean enabled;
 
