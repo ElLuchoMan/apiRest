@@ -12,6 +12,24 @@ public class Account implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Long saldo;
-	private String tipoCuenta;
 	private String user;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Long getSaldo() {
+		return saldo;
+	}
+	public void setSaldo(Long saldo) {
+		this.saldo = saldo;
+	}
+	public String getUser() {
+		return user;
+	}
+	public void setUser(String user) {
+		this.user = user;
+	}
+	
 }

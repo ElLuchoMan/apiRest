@@ -20,63 +20,61 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.entity.User;
-import com.example.demo.service.UserService;
+import com.example.demo.entity.Account;
+import com.example.demo.service.AccountService;
 @CrossOrigin(origins ="http://localhost:4200/",maxAge=3600)
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/accounts")
 @ComponentScan("com.example")
-public class UserController {
+public class AccountController {
 @Autowired
-private UserService userService;
+private AccountService accountService;
 
 // crear usuario
 @PostMapping
-public ResponseEntity<?> create(@RequestBody User user) {
-return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
+public ResponseEntity<?> create(@RequestBody Account account) {
+return ResponseEntity.status(HttpStatus.CREATED).body(accountService.save(account));
 }
 
 // Leer usuario
 
 @GetMapping("/{id}")
-public ResponseEntity<?> read(@PathVariable(value = "id") Long userId) {
-Optional<User> oUser = userService.findById(userId);
-if (!oUser.isPresent()) {
+public ResponseEntity<?> read(@PathVariable(value = "id") Long accountId) {
+Optional<Account> oAccount = accountService.findById(accountId);
+if (!oAccount.isPresent()) {
 return ResponseEntity.notFound().build();
 }
-return ResponseEntity.ok(oUser);
+return ResponseEntity.ok(oAccount);
 }
 
-// actualizar user
+// actualizar account
 @PutMapping("/{id}")
-public ResponseEntity<?> update(@RequestBody User userDetails, @PathVariable(value = "id") Long userId) {
-Optional<User> user = userService.findById(userId);
-if (!user.isPresent()) {
+public ResponseEntity<?> update(@RequestBody Account accountDetails, @PathVariable(value = "id") Long accountId) {
+Optional<Account> account = accountService.findById(accountId);
+if (!account.isPresent()) {
 return ResponseEntity.notFound().build();
 }
-// BeanUtils.copyProperties(userDetails, user.get());
-user.get().setName(userDetails.getName());
-user.get().setLastname(userDetails.getLastname());
-user.get().setEmail(userDetails.getEmail());
-user.get().setEnabled(userDetails.getEnabled());
-return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user.get()));
+// BeanUtils.copyProperties(accountDetails, account.get());
+account.get().setSaldo(accountDetails.getSaldo());
+account.get().setUser(accountDetails.getUser());
+return ResponseEntity.status(HttpStatus.CREATED).body(accountService.save(account.get()));
 }
 
 // Borrar usuario
 @DeleteMapping("/{id}")
-public ResponseEntity<?> delete(@PathVariable(value = "id") Long userId) {
-if (!userService.findById(userId).isPresent()) {
+public ResponseEntity<?> delete(@PathVariable(value = "id") Long accountId) {
+if (!accountService.findById(accountId).isPresent()) {
 return ResponseEntity.notFound().build();
 }
-userService.deleteById(userId);
+accountService.deleteById(accountId);
 return ResponseEntity.ok().build();
 }
 
 // Leer todos los usuarios
 @GetMapping
-public List<User> readAll() {
-List<User> users = StreamSupport.stream(userService.findAll().spliterator(), false)
+public List<Account> readAll() {
+List<Account> accounts = StreamSupport.stream(accountService.findAll().spliterator(), false)
 .collect(Collectors.toList());
-return users;
+return accounts;
 }
 }
